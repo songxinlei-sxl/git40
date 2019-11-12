@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.byzx.dao.OrderInfoHgyDao">
+	
+	<insert id="addOrderInfo" parameterType="OrderInfoHgy">
+		insert into t_orderinfo(
+			odid,
+			r_id,
+			o_uaddress,
+			o_time,
+			createtime,
+			regenerant,
+			o_weight,
+			delflag,
+			remark,
+			o_name,
+		
+			state
+			
+		)
+		values(
+			#{odid},
+			#{r_id},
+			#{o_uaddress},
+			#{o_time},
+			#{createtime},
+			#{regenerant},
+			#{o_weight},
+			#{delflag},
+			#{remark},
+			#{o_name},
+			
+			#{state}
+			
+		)
+	</insert>
+	
+	<select id="findAllOrderInfo1" parameterType="Map" resultType="OrderInfoHgy">
+		select 
+			*
+		from 
+			t_orderinfo
+		where 
+			delflag=0 and r_id=#{r_id}
+		limit #{pageBean.start},#{pageBean.rows}
+	</select>
+	
+	<select id="findAllOrderInfoCount1" parameterType="Map" resultType="Integer">
+		select 
+			count(*) 
+		from 
+			t_orderinfo
+		where 
+			delflag=0 and r_id=#{r_id}
+		
+	</select>
+	
+
+</mapper>

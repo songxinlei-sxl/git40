@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.byzx.dao.AllotInfoDao">
+
+	<!-- 全查车辆调拨信息 -->
+	<select id="findAllotInfo" parameterType="Map" resultType="AllotInfo" >
+		select 
+			a_aid,
+			c_carid,
+			a_time,
+			a_depart,
+			a_destination,
+			opt_id,
+			remark
+		from 
+			t_allot 
+		where
+			delflag=0
+	</select>
+	
+	<!-- 全查车辆调拨信息条数 -->
+	<select id="findAllotInfoCount" parameterType="Map" resultType="Integer">
+		select 
+			count(*) 
+		from  
+			t_allot 
+		where
+			delflag=0
+			<if test="searchByNumber!=null">
+		 		 and c_carid like concat('%',#{searchByNumber},'%')
+		 	</if>
+	</select>
+	
+	<!-- 全查车辆调拨信息条数 -->
+	<select id="findallotInfoByUNumber" parameterType="Integer" resultType="AllotInfo">
+		select count(c_carid) from t_allot where delflag=0 and c_carid=#{c_carid}
+	</select>
+	<!-- 保存车辆调拨信息 -->
+	<insert id="saveallotInfo" parameterType="AllotInfo">
+		insert into
+			t_allot(
+				a_aid,
+				c_carid,	
+				a_depart,
+				a_destination,
+				a_time,
+				delflag,
+				remark
+			)values(
+				#{a_aid},
+				#{c_carid},	
+				#{a_depart},
+				#{a_destination},
+				#{a_time},
+				#{delflag},
+				#{remark}
+			)
+	</insert>
+
+	<!-- 更新车辆调拨信息 -->
+	<update id="updateallotInfo" parameterType="AllotInfo">
+		update 
+			t_allot
+		set
+			c_carid=#{c_carid},
+			a_depart=#{a_depart},
+			a_destination=#{a_destination},
+			remark=#{remark}
+		where
+			a_aid=#{a_aid}
+	</update>
+	<!--删除车辆调拨信息 -->
+	<update id="deleteallotInfo" parameterType="Integer">
+		update 
+			t_allot
+		set
+			delflag=1
+		where 
+			a_aid=#{a_aid}
+	</update>
+</mapper> 
+
+
+
+
+
+
+
+
+
